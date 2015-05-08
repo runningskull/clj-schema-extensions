@@ -128,6 +128,11 @@
     (let [schema (sext-field/field {s/Keyword s/Int} :endpoint true :singular "foo")]
       (is (endpoint/endpoint? schema))
       (is (= "foo" (endpoint/endpoint-singular schema)))))
+  (testing "triggers on false"
+    (let [schema {:a (sext-field/field  s/Bool :default false)}]
+      (is (derived/derived? (:a schema)))
+      (is (= {:a false} (derived/derive-schema schema {})))
+      (is (= {:a true} (derived/derive-schema schema {:a true})))))
   (testing "describe"
     (is (= (meta (sext-field/field s/Int :description "foobar" :yomama "yoyos"))
            (meta (sext-field/describe s/Int "foobar" :yomama "yoyos"))))))

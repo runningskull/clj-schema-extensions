@@ -18,10 +18,10 @@
   (let [mapargs (apply hash-map args)]
     (-> schema
         (field-update mapargs)
-        ((um/if-then (:derived mapargs) (derived (:derived mapargs))))
-        ((um/if-then (:default mapargs) (defaulting (:default mapargs))))
-        ((um/if-then (:optional mapargs) optional))
-        ((um/if-then (:endpoint mapargs) (endpoint :singular (:singular mapargs)))))))
+        ((um/if-then (some? (:derived mapargs)) (derived (:derived mapargs))))
+        ((um/if-then (some? (:default mapargs)) (defaulting (:default mapargs))))
+        ((um/if-then (some? (:optional mapargs)) optional))
+        ((um/if-then (some? (:endpoint mapargs)) (endpoint :singular (:singular mapargs)))))))
 
 (defn describe
   "Attach description and possibly other meta-data to a schema."
