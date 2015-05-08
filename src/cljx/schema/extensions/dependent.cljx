@@ -14,7 +14,7 @@
       (fn [x]
         (let [schema-walker (-> x (get field) walkers)]
           (if-not schema-walker
-            (macros/validation-error this x (list (keys schema-map) (utils/value-name x)))
+            (macros/validation-error this x (list (get x field) :in (apply vector (keys schema-map))))
             (schema-walker x))))))
   (explain [this] (list 'field-dependent :on field :of schema-map)))
 
