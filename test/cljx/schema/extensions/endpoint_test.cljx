@@ -2,12 +2,11 @@
   (:require #+clj [clojure.test :refer :all]
             #+cljs cemerick.cljs.test
             [schema.core :as s]
-            [schema.extensions.endpoint :as endpoint]
-            [schema.extensions.ids :refer [add-id]])
+            [schema.extensions.endpoint :as endpoint])
   #+cljs (:require-macros [cemerick.cljs.test :refer (is deftest testing)]))
 
 (deftest endpoint-test
-  (let [schema {:a (endpoint/endpoint [(add-id {:b s/Str})] :singular "single")}
+  (let [schema {:a (endpoint/endpoint [{:id s/Str :b s/Str}] :singular "single")}
         data {:a [{:id "abc123" :b "yoyo"}
                   {:id "def456" :b "mama"}]}]
     (testing "endpoint?"

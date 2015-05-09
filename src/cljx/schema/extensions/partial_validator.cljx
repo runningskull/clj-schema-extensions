@@ -1,6 +1,7 @@
 (ns schema.extensions.partial-validator
   (:require [schema.core :refer [start-walker walker]]
             [schema.utils :as sutils]
+            [schema.coerce :as coerce]
             #+clj [schema.macros :as sm]
             [schema.extensions.util :refer [field-meta]])
   #+cljs (:require-macros [schema.macros :as sm]))
@@ -12,10 +13,11 @@
   (fn [schema]
     (start-walker
       (fn [s]
-        (let [walk (walker s)]
+        (let [walk (walker s)
+              c (or (coerce/json-coercion-matcher s) identity)]
           (fn [x]
             (when (not= x :schema.core/missing)
-                  (f s walk x)))))
+                  (->> x c (f s walk))))))
       schema)))
 
 ;; Basic partial validator

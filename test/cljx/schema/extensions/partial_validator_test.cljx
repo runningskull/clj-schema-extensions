@@ -14,6 +14,8 @@
       (is (nil? (partial-check schema {}))))
     (testing "full object"
       (is (nil? (partial-check schema {:a 1 :b 2}))))
+    (testing "coerce some enums"
+      (is (nil? (partial-check {:a (s/enum :key)} {:a "key"}))))
     (testing "invalid object"
       (is (some? (partial-check schema {:a "abc"}))))
     (testing "invalid full object"

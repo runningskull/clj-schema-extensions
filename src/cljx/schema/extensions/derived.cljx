@@ -58,10 +58,7 @@
            dc (or (derive-coercion s) identity)
            c (or (coerce/json-coercion-matcher s) identity)]
        (fn [x]
-          (->> x
-               dc
-               c
-               walk))))
+          (-> x dc c walk))))
    schema))
 
 ;; Deriving walker

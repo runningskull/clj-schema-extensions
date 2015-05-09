@@ -58,7 +58,10 @@
   (-> eschema first))
 
 (defn- get-endpoint-id-schema [eschema]
-  (-> eschema first :id))
+  (let [es (-> eschema first)]
+    (cond (field-dependent? es) (-> es :base-schema :id)
+          (map? es) (:id es)
+          :otherwise schema/Str)))
 
 (defn- get-endpoint-keywords [prefix sep]
   (->> sep

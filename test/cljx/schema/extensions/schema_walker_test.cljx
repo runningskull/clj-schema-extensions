@@ -4,6 +4,7 @@
             [schema.core :as s]
             [schema.extensions.endpoint :refer [endpoint]]
             [schema.extensions.schema-walker :as walker]
+            [schema.extensions.dependent :as dependent]
             #+clj [schema.extensions.util-macros :as um])
   #+cljs (:require-macros [schema.extensions.schema-walker :as walker-macro]
                           [cemerick.cljs.test :refer (is deftest testing)]))
@@ -38,4 +39,8 @@
             {:path "x/y" :schema {:y s/Int} :keywords [:x :y] :id-schema nil :singular "bar"}])))
   (testing "ID Schema"
     (is (= (walker/all-endpoints {:a (endpoint [{:b s/Str :id s/Int}])})
-           [{:path "a" :schema {:b s/Str :id s/Int} :keywords [:a] :id-schema s/Int :singular nil}]))))
+           [{:path "a" :schema {:b s/Str :id s/Int} :keywords [:a] :id-schema s/Int :singular nil}])))
+  (testing "ID schema in dependent"
+    (is (= (walker/all-endpoints {:a (endpoint [(dependent/field-dependent :type s/Keyword {:id s/Str} {:t1 {:b s/Str}})])})
+           [{:path "a" :schema (dependent/field-dependent :type s/Keyword {:id s/Str} {:t1 {:b s/Str}})
+             :keywords [:a] :id-schema s/Str :singular nil}]))))

@@ -2,7 +2,6 @@
   (:require #+clj [clojure.test :refer :all]
             #+cljs cemerick.cljs.test
             [schema.core :as s]
-            [schema.extensions.ids :as ids]
             [schema.extensions.derived :as derived]
             [schema.extensions.endpoint :as endpoint]
             [schema.extensions.unix-timestamp :as unix-timestamp]
@@ -12,15 +11,6 @@
             [#+clj clj-time.core #+cljs cljs-time.core :as t]
             [#+clj clj-time.coerce #+cljs cljs-time.coerce :as c])
   #+cljs (:require-macros [cemerick.cljs.test :refer (is deftest testing)]))
-
-(deftest ids-test
-  (let [schema (ids/add-id {:a s/Str})]
-    (testing "add-id"
-      (is (nil? (s/check schema {:id "123" :a "abc"})))
-      (is (some? (s/check schema {:a "abc"}))))
-    (testing "remove-id"
-      (is (nil? (s/check (ids/remove-id schema) {:a "abc"})))
-      (is (some? (s/check (ids/remove-id schema) {:id "123" :a "abc"}))))))
 
 (deftest derived-test
   (let [schema {:a s/Str
