@@ -11,6 +11,7 @@
   :test-paths ["target/generated/test/clj" "test/cljx"]
 
   :prep-tasks [["cljx" "once"] "javac" "compile"]
+  :repositories [["release" :clojars]]
 
   :dependencies [[org.clojure/clojure "1.6.0"]
 
