@@ -11,7 +11,6 @@
   :test-paths ["target/generated/test/clj" "test/cljx"]
 
   :prep-tasks [["cljx" "once"] "javac" "compile"]
-  :repositories [["release" :clojars]]
 
   :dependencies [[org.clojure/clojure "1.6.0"]
 
@@ -25,7 +24,8 @@
                  [com.andrewmcveigh/cljs-time "0.3.4"]
                  ]
 
-  :aliases {"ctest" ["do" "clean," "cljx" "once," "test," "cljsbuild" "test"]}
+  :aliases {"ctest" ["do" "clean," "cljx" "once," "test," "cljsbuild" "test"]
+            "deploy" ["do" "clean," "cljx" "once," "deploy" "clojars"]}
 
   :profiles
     {:dev  {:dependencies [[org.clojure/clojurescript "0.0-2850"]]
@@ -64,9 +64,4 @@
                  :rules :cljs}]}
 
   :repl-options {:welcome (user/welcome)
-                 :init-ns user}
-  :release-tasks [["vcs" "assert-committed"]
-                  ["change" "version"
-                   "leiningen.release/bump-version" "release"]
-                  ["vcs" "commit"]
-                  ["deploy" "clojars"]])
+                 :init-ns user})
