@@ -69,4 +69,4 @@
                   ["change" "version"
                    "leiningen.release/bump-version" "release"]
                   ["vcs" "commit"]
-                  ["deploy"]])
+                  ["deploy" "clojars"]])
