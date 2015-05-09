@@ -64,4 +64,9 @@
                  :rules :cljs}]}
 
   :repl-options {:welcome (user/welcome)
-                 :init-ns user})
+                 :init-ns user}
+  :release-tasks [["vcs" "assert-committed"]
+                  ["change" "version"
+                   "leiningen.release/bump-version" "release"]
+                  ["vcs" "commit"]
+                  ["deploy"]])
