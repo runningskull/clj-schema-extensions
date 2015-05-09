@@ -1,4 +1,4 @@
-(defproject org.clojars.yanatan16/schema-extensions "0.1.3"
+(defproject org.clojars.yanatan16/schema-extensions "0.1.4"
   :description "Schema Extensions for Prismatic's schema"
   :url "http://github.com/yanatan16/clj-schema-extensions"
   :license {:name "MIT"
