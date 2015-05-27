@@ -18,7 +18,7 @@
   "Allow a field to be a default. Is not applied if a value exists. Takes a function or a value."
   [schema default]
   (-> schema
-      (derived (fn [a k] (cond (a k)         (a k)
+      (derived (fn [a k] (cond (some? (a k)) (a k)
                                (fn? default) (default)
                                :otherwise    default)))))
 
